@@ -1,34 +1,55 @@
-function printLCD(input) {
-    var Keys=buildKeys(input);
-    var AllItems=buildAllItems(Keys);
-    console.log(printf(AllItems));
+function printLcd(input) {
+    var keys=buildKeys(input);
+    var allItems=buildItems(keys);
+    
+    console.log(printf(allItems));
 }
+
 function buildKeys(input) {
     input+="";
-    var Keys=input.split("");
-    return  Keys;
+    var keys=input.split("");
+    
+    return  keys;
 }
-function buildAllItems(Keys) {
+
+function buildItems(keys) {
     var allItems = loadAllItems();
-    var AllItems=[];
-    for(var i=0;i<Keys.length;i++){
-        for(var j=0;j<allItems.length;j++){
-            if(Keys[i]==allItems[j].key){
-                AllItems.push(allItems[j]);
-            }
+    var items=[];
+
+    keys.forEach(function (value) {
+       findTheCorrespondingItem(allItems,value,items);
+   });
+    
+    return items;
+}
+
+function findTheCorrespondingItem(allItems,value,items) {
+    for(var j=0;j<allItems.length;j++){
+        if(value==allItems[j].key){
+            items.push(allItems[j]);
         }
     }
-    return AllItems;
 }
-function printf(AllItems) {
-    var str="```\n"+AllItems[0].item[0];
-    var str1=AllItems[0].item[1];
-    var str2=AllItems[0].item[2];
-    for(var i=1;i<AllItems.length;i++){
-        str+=" "+AllItems[i].item[0];
-        str1+=" "+AllItems[i].item[1];
-        str2+=" "+AllItems[i].item[2];
+
+function printf(items) {
+    var str="```\n";
+
+    items.forEach(function (value, index) {
+        str=stringBuilderItems(items,str,index);
+        str+="\n";
+    });
+    str+="```";
+
+    return str;
+}
+
+function stringBuilderItems(items,str,j) {
+    for(var i=0;i<items.length;i++){
+        str+=items[i].item[j];
+        if(i!=items.length-1){
+            str+=" ";
+        }
     }
-    str+="\n"+str1+"\n"+str2+"\n"+"```";
+
     return str;
 }
