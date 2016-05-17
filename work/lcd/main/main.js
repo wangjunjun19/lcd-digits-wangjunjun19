@@ -1,53 +1,53 @@
 function printLcd(input) {
-    var keys=buildKeys(input);
-    var allItems=buildItems(keys);
-    
-    console.log(printf(allItems));
+    var keys = buildKeysArray(input);
+    var lcdArray = buildLcdsArray(keys);
+
+    console.log(toLcd(lcdArray));
 }
 
-function buildKeys(input) {
-    input+="";
-    var keys=input.split("");
-    
-    return  keys;
+function buildKeysArray(input) {
+    input += "";
+    var keysArray = input.split("");
+
+    return keysArray;
 }
 
-function buildItems(keys) {
+function buildLcdsArray(keysArray) {
     var allItems = loadAllItems();
-    var items=[];
+    var lcdArray = [];
 
-    keys.forEach(function (value) {
-       findTheCorrespondingItem(allItems,value,items);
-   });
-    
-    return items;
+    keysArray.forEach(function (value) {
+        findTheCorrespondingItem(allItems, value, lcdArray);
+    });
+
+    return lcdArray;
 }
 
-function findTheCorrespondingItem(allItems,value,items) {
-    for(var j=0;j<allItems.length;j++){
-        if(value==allItems[j].key){
-            items.push(allItems[j]);
+function findTheCorrespondingItem(allItems, value, lcdArray) {
+    for (var j = 0; j < allItems.length; j++) {
+        if (value == allItems[j].key) {
+            lcdArray.push(allItems[j]);
         }
     }
 }
 
-function printf(items) {
-    var str="```\n";
+function toLcd(lcdArray) {
+    var str = "```\n";
 
-    items.forEach(function (value, index) {
-        str=stringBuilderItems(items,str,index);
-        str+="\n";
+    lcdArray.forEach(function (value, index) {
+        str = stringBuilder(lcdArray, str, index);
+        str += "\n";
     });
-    str+="```";
+    str += "```";
 
     return str;
 }
 
-function stringBuilderItems(items,str,j) {
-    for(var i=0;i<items.length;i++){
-        str+=items[i].item[j];
-        if(i!=items.length-1){
-            str+=" ";
+function stringBuilder(lcdArray, str, j) {
+    for (var i = 0; i < lcdArray.length; i++) {
+        str += lcdArray[i].item[j];
+        if (i != lcdArray.length - 1) {
+            str += " ";
         }
     }
 
